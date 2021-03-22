@@ -1,0 +1,6 @@
+module Pods_cptr {
+  umbrella header "Pods-cptr-umbrella.h"
+
+  export *
+  module * { export * }
+}
