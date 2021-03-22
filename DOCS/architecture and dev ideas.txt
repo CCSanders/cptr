@@ -1,0 +1,19 @@
+two main components:
+
+1) social aspect
+infinitely scrollable feed of gif posts that can be loved or commented on
+profile shows posts, can follow other profiles or look at a feed
+
+2) gif creation aspect
+using native camera libraries
+either take small video (2 seconds) and divide it into 6-8 frames or take 6-8 photos over 2 seconds and create looping structure
+phhhoto gifs were quite grainy which gave off a very distinct, pleasing aesthetic.
+can save to camera roll or post
+
+take video -> send to aws s3 bucket -> have a python lambda layer that converts it into a looping gif (imageio, ffmpeg) -> return to phone??
+
+it would probably be better to do this all on the device so they don't need internet to take the pictures. 
+
+https://www.npmjs.com/package/react-native-ffmpeg
+
+ffmpeg has stuff for looping, turning videos and images into gifs, and filtering. 

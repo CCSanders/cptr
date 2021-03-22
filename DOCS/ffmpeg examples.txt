@@ -1,0 +1,39 @@
+FFMPEG TESTING COMMANDS
+
+SHOWS DATA ABOUT INPUT
+./ffmpeg.exe -i ../../can-tilt.mov
+
+CONVERTS INPUT TO GIF
+./ffmpeg.exe -i ../../can-tilt.mov ../../output.gif
+
+APPLIES FILTER TO INPUT: CHANGES FPS TO 4, SCALE TO 400PX WIDTH AND MAINTAIN HEIGHT ASPECT USING LANCZOS ALGO, OUTPUT TO GIF
+./ffmpeg.exe -i ../../can-tilt.mov -vf "fps=4,scale=400:-1:flags=lanczos" ../../output.gif
+
+SAME AS ABOVE BUT CHANGES THE PRESENTATION TIMESTAMP (PTS) OF EACH FRAME TO HALF THE TIME, DOUBLING THE OUTPUT SPEED
+./ffmpeg.exe -i ../../can-tilt.mov -vf "fps=4,scale=400:-1:flags=lanczos,setpts=0.5*PTS" ../../output.gif
+
+CREATED A TEMP FORWARD PLAYING 4 FRAME GIF AND TRIED REVERSING AND THEN CONCAT TO THE END. 
+./ffmpeg.exe -i ../../forward-frames.gif -filter_complex "[0:v]reverse,fifo[r];[0:v][r] concat=n=2:v=1 [v]" -map "[v]" ../../ping-pong.gif
+
+SEEMS LOWERING THE FRAMERATE TOO MUCH DOES NOT MAKE IT LOOK GREAT. INCREASING IT TO ABOUT 10FPS ON A 2 SECOND VIDEO LOOKS SO GOOD
+
+CURRENT PIPELINE (DOES EVERYTHING ABOVE CORRECTLY IN ONE FILTER)
+
+./ffmpeg.exe -i ../../INPUT.mov -filter_complex "[0:v]fps=10, scale=600:-1:flags=lanczos, setpts=0.2*PTS, fifo[v0]; [v0] split [o1][o2]; [o1] reverse, fifo[r]; [o2][r] concat=n=2:v=1 [v]" -map "[v]" ../../OUTPUT.gif
+
+THE QUALITY IS LIKE REALLY REALLY BAD THO SO I SHOULD UPSCALE IT A BIT AND APPLY A DIFFERENT ENCODING MAYBE?
+CHECK OUT
+https://superuser.com/questions/556029/how-do-i-convert-a-video-to-gif-using-ffmpeg-with-reasonable-quality
+SPECIFICALLY THE PALETTEGEN STUFF
+
+
+PHHHOTO ANALYSIS USING FFMPEG
+./ffmpeg.exe -i ../../old-phhhoto-pics/1.mp4
+ ./ffmpeg.exe -i ../../old-phhhoto-pics/1.gif
+
+DOING IT ON WEBP FILES DOESNT WORK FOR SOME REASON
+
+BOTH THE GIF AND THE VIDEO ARE .8 SECONDS AT 10FPS (MAKES SENSE, 4 PHOTOS CAPTURED AND THEN PLAYED BACKWARDS SO 8 FRAMES
+FRAMES PLAYED AT 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 AND THEN LOOP
+
+SO INSTEAD OF CAPTURING VIDEO AND DOWN SCALING AND GUTTING THE FRAMES, I SHOULD BE CONSTRUCTING A GIF FRAME BY FRAME
