@@ -1,6 +1,0 @@
-module Pods_cptr_cptrTests {
-  umbrella header "Pods-cptr-cptrTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
