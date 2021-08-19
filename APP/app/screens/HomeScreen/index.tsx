@@ -1,28 +1,26 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
-import Logo from 'assets/images/react-logo.png';
+import Logo from '@app/assets/images/react-logo.png';
 import { MaterialColors, FontWeights, FontSizes } from '@app/theme';
 
 const HomeScreen = () => {
-  const { status } = useSelector(({ data }) => data);
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <Image source={Logo} style={styles.logo} />
         <View style={styles.headerContainer}>
-          <Text style={styles.heading}>React Native Boilerplate</Text>
+          <Text style={styles.heading}>CPTR</Text>
           <Text style={styles.body}>
-            Robust boilerplate to kickstart your next app
+            Foundational boilerplate
           </Text>
         </View>
       </View>
       <Text style={styles.item}>
-        Redux <Text style={{ color: MaterialColors.green[400] }}>{status}</Text>
+        <Text style={{ color: MaterialColors.purple[800] }}>Creative By Default</Text>
       </Text>
       <Text style={styles.item}>
-        TypeScript <Text style={{ color: MaterialColors.blue[800] }}>Added</Text>
+        TypeScript <Text style={{ color: MaterialColors.purple[800] }}>Added</Text>
       </Text>
     </View>
   );
