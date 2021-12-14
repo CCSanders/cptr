@@ -54,9 +54,9 @@ yarn rename <new_name> -b <bundle_identifier>
 
 Removing Redux:
 
-I personally like Redux for state management for larger apps but sometimes if the app is relatively smaller then I stick to using context api or simple `useState` or `useReducer` 
+I personally like Redux for state management for larger apps butsometimes if the app is relatively smaller then I stick to using context api or simple `useState` or `useReducer` 
 Checkout this great light weight Redux like implementation using just the `React Context` api: https://github.com/RichardBray/no-redux
-If you like to use other great solutions such as MobX, RxJS then feel free to remove redux by using `yarn redux:remove` 
+If you like to use other great solutions such as MobX, RxJS then fe el free to remove redux by using `yarn redux:remove` 
 
 Note: you will have to configure the project files accordingly
 

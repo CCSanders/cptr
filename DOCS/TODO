@@ -1,0 +1,14 @@
+FRONT-END
+- Re-figure out build process for current boilerplate. Do a quick run-through to understand previous progress, things installed, etc.
+- Test deploy to iOS device. Figure out basic development process (i.e. will I develop on Windows and test on OSX?)
+- Start porting basic Proximity features / screens by hand. 
+
+BACK-END / DB
+- Start designing a rough draft of a data model for the GraphQL API
+- Initialize the Amplify project / install Amplify global CLI tool 
+
+STUDIO
+- Implement a simple color filter, build tool to configure it programatically?
+- Reevaluate the need for scriptable JSON filter graph parser / exporter. Would be nice but can also just code graphs by hand in Python using python-ffmpeg.
+
+HOUSE-KEEPING
