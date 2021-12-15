@@ -3,8 +3,12 @@
  * This contains all the color config for the application
  */
 
-export const AppColors = {
-  primary: '#69A4EB',
+export const Theme = {
+  colors: {
+    bg: '#121212',
+    text_primary: '#FFFFFF',
+    text_seconday: '#BBBBBB'
+  }
 };
 
 /**

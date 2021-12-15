@@ -1,4 +1,4 @@
-import { AppColors, MaterialColors } from './Colors';
+import { Theme, MaterialColors } from './Colors';
 import { FontWeights, FontSizes } from './Typography';
 
-export { AppColors, MaterialColors, FontWeights, FontSizes };
+export { Theme, MaterialColors, FontWeights, FontSizes };

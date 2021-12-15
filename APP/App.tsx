@@ -1,19 +1,29 @@
 import React from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StyleSheet } from 'react-native';
+import SafeAreaProvider from 'react-native-safe-area-context';
+
 import AppNavigator from './app/navigation';
+import { Theme } from './app/theme';
 
 const SafeAreaApp = () => {
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider style={styles().container}>
       <AppNavigator />
     </SafeAreaProvider>
-  )
-}
+  );
+};
 
 const App = () => {
   return (
     <SafeAreaApp/>
-  )
-}
+  );
+};
+
+const styles = () => StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Theme.colors.bg
+  }
+});
 
 export default App;
