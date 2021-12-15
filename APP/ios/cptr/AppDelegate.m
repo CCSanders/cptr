@@ -9,6 +9,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
+/*
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
 #import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
@@ -27,15 +28,19 @@ static void InitializeFlipper(UIApplication *application) {
   [client start];
 }
 #endif
+*/
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  
+/*
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
 #endif
-
+*/
+ 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
 
   // Additional condition for the RCTBridge warning bug
