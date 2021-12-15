@@ -1,0 +1,28 @@
+Windows IDE, iOS Build Front-End
+
+- Push changes to GitHub from Windows device
+- Pull changes on build device (Macbook)
+- > cd APP
+- > yarn install (to build / get dependencies yarn dependencies)
+- > yarn cocoapods (to build / get ios dependencies)
+- > yarn ios
+- If "yarn ios" fails, may have to open Xcode directly and run command again. 
+- Should open the Metro bundler terminal and a simulator configured in Xcode. 
+
+Issues Found & Solutions:
+
+While running "yarn ios": Could not get simulator list from Xcode. Please open Xcode and try running project directly from there to resolve the remaining issues.
+Solution: Open project (SPECIFICALLY cptr.xcworkspace!!!) in Xcode before running yarn ios. Can potentially run the project through Xcode. 
+
+The iOS Simulator deployment target 'IPHONEOS_DEPLOYMENT_TARGET' is set to 8.0, but the range of supported deployment target versions is 9.0 to 15.0.99.
+Solution: Remove / Update this target value in Podfile post install script. See: https://developer.apple.com/forums/thread/656616
+UPDATE: I really could not get Flipper to work, so I commented out this lines and also commented out the use_flipper line in the Podfile. Also had to comment out Flipper lines in AppDelegate.m file. Then cd ios, rm -rf Pods, pod install
+
+Yarn Clean: Broken currently (see: https://github.com/pmadruga/react-native-clean-project/issues/79)
+
+Error when running pod install: missing compatible arch. 
+Solution: M1 Mac Issues, see: https://stackoverflow.com/questions/64901180/running-cocoapods-on-apple-silicon-m1
+
+When compiling through Xcode: Error: Could not find node. Make sure it is in bash PATH - Command PhaseScriptExecution failed with a nonzero exit code. 
+Solution: sudo ln -s $(which node) /usr/local/bin/node
+
