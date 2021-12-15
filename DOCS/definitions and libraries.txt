@@ -1,0 +1,11 @@
+React - Frontend library that lets us define the entire UI of our app as a tree of JavaScript objects, called React Elements. 
+
+React Native - A library that provides mobile-platform specific bindings for a React application. Allows us to render our React element tree on mobile using native UI elements. 
+
+React Navigation -
+
+Babel - A configurable JS compiler that lets us write newer JS and not worry about feature compatibility. Things will automatically be compiled down into older versions of JS, so we don't have to worry about versi on differences or JSC vs. Hermes. babel.config.ts is the configuration file.
+
+JSC - Open source JS engine used by Safari and sometimes on Android
+
+Hermes - New JS engine from FB
