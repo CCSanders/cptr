@@ -17,10 +17,10 @@ const HomeScreen = () => {
         </View>
       </View>
       <Text style={styles.item}>
-        <Text style={{ color: MaterialColors.purple[800] }}>Creative By Default</Text>
+        <Text style={{ color: MaterialColors.purple[300] }}>Creative By Default</Text>
       </Text>
       <Text style={styles.item}>
-        TypeScript <Text style={{ color: MaterialColors.purple[800] }}>Added</Text>
+        TypeScript <Text style={{ color: MaterialColors.purple[300] }}>Added</Text>
       </Text>
     </View>
   );
@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     ...FontWeights.Light,
     ...FontSizes.Body,
     marginTop: 10,
+    color: Theme.colors.text_primary
   },
 });
 
