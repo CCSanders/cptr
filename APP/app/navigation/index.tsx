@@ -9,7 +9,7 @@ import { HomeScreen, CaptureScreen, ExploreScreen, ProfileScreen, SignInScreen }
 const AuthStack = createStackNavigator();
 function AuthStackScreen() {
   return (
-    <AuthStack.Navigator>
+    <AuthStack.Navigator screenOptions={{ headerShown: false }}>
       <AuthStack.Screen name="SignInScreen" component={SignInScreen}/>
     </AuthStack.Navigator>
   );
@@ -18,7 +18,7 @@ function AuthStackScreen() {
 const HomeNavigator = createBottomTabNavigator();
 function HomeNavigatorScreen() {
   return (
-    <HomeNavigator.Navigator>
+    <HomeNavigator.Navigator screenOptions={{ headerShown: false }}>
       <HomeNavigator.Screen name="Home" component={HomeScreen}/>
       <HomeNavigator.Screen name="Explore" component={ExploreScreen}/>
       <HomeNavigator.Screen name="Capture" component={CaptureScreen}/>
@@ -34,7 +34,7 @@ const AppNavigator = () => (
   <NavigationContainer>
     <MainStack.Navigator initialRouteName='AuthStack' screenOptions={{ headerShown: false }}>
       
-      { true ? (
+      { false ? (
         <MainStack.Screen name='AuthStack' component={AuthStackScreen} />
       ) : (
         <MainStack.Screen name='HomeStack' component={HomeNavigatorScreen}/>
