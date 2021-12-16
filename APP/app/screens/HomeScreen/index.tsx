@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import Logo from '@app/assets/images/react-logo.png';
-import { MaterialColors, FontWeights, FontSizes } from '@app/theme';
+import { Theme, MaterialColors, FontWeights, FontSizes } from '@app/theme';
 
 const HomeScreen = () => {
 
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white',
+    backgroundColor: Theme.colors.bg
   },
   content: {
     flexDirection: 'row',
@@ -47,10 +47,11 @@ const styles = StyleSheet.create({
   heading: {
     ...FontWeights.Light,
     ...FontSizes.SubHeading,
+    color: Theme.colors.text_primary
   },
   body: {
     ...FontWeights.Light,
-    color: MaterialColors.grey[500],
+    color: Theme.colors.text_seconday,
     ...FontSizes.Body,
   },
   item: {
