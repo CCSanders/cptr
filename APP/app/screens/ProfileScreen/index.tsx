@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import Logo from '@app/assets/images/react-logo.png';
 import { Theme, MaterialColors, FontWeights, FontSizes } from '@app/theme';
 
-const HomeScreen = () => {
+const ProfileScreen = () => {
 
   return (
     <View style={styles.container}>
@@ -12,7 +12,7 @@ const HomeScreen = () => {
         <View style={styles.headerContainer}>
           <Text style={styles.heading}>CPTR</Text>
           <Text style={styles.body}>
-            This is the home screen!
+            This is the profile screen!
           </Text>
         </View>
       </View>
@@ -59,4 +59,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default ProfileScreen;

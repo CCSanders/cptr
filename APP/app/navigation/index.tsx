@@ -1,16 +1,46 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { HomeScreen } from '../screens';
+import { HomeScreen, CaptureScreen, ExploreScreen, ProfileScreen, SignInScreen } from '../screens';
 
-const Stack = createStackNavigator();
 
+const AuthStack = createStackNavigator();
+function AuthStackScreen() {
+  return (
+    <AuthStack.Navigator>
+      <AuthStack.Screen name="SignInScreen" component={SignInScreen}/>
+    </AuthStack.Navigator>
+  );
+};
+
+const HomeNavigator = createBottomTabNavigator();
+function HomeNavigatorScreen() {
+  return (
+    <HomeNavigator.Navigator>
+      <HomeNavigator.Screen name="Home" component={HomeScreen}/>
+      <HomeNavigator.Screen name="Explore" component={ExploreScreen}/>
+      <HomeNavigator.Screen name="Capture" component={CaptureScreen}/>
+      <HomeNavigator.Screen name="Profile" component={ProfileScreen}/>
+    </HomeNavigator.Navigator>
+  );
+};
+
+const MainStack = createStackNavigator();
+
+//TODO: This is fake auth for testing. 
 const AppNavigator = () => (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName='HomeScreen' screenOptions={{ headerShown: false }}>
-      <Stack.Screen name='HomeScreen' component={HomeScreen} />
-    </Stack.Navigator>
+    <MainStack.Navigator initialRouteName='AuthStack' screenOptions={{ headerShown: false }}>
+      
+      { true ? (
+        <MainStack.Screen name='AuthStack' component={AuthStackScreen} />
+      ) : (
+        <MainStack.Screen name='HomeStack' component={HomeNavigatorScreen}/>
+      )}
+
+    </MainStack.Navigator>
   </NavigationContainer>
 );
 
