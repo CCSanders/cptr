@@ -1,0 +1,86 @@
+React 
+- Context: Provides data to components no matter how deep they are in the components tree. Used to manage global data, theme, services, user settings, and more.
+    - Requires 3 steps: Create the context, provide the context, and consume the context.
+    - createContext - factory function that accepts one argument, default value.
+    - Context.Provider - component that provides the contexrt to child components. Can set the value of the context (seems like in place of the createContext function? Can't see how these connect yet.)
+    - Any component that is a child of the context provider can call useContext(Context) to consume the context. Components will rerender when the value of the context changes. Note: seems like the context needs to be passed in. So it is exported from some other file.
+    - Examples: Global state, theme, application configuration, authenticated user name, user settings, preferred language, collection of services. 
+    - Solves the props drilling problem: If there are 4 parent-child components (i.e. A->B->C->D), and A wants to pass a prop to D without context, it must be passed through each component explicitly. (https://kentcdodds.com/blog/prop-drilling)
+    - By default: Context API is stateless and does provide a method to update it from consumers. Solution: State management mechanisms such as useState() or useReducer(). 
+    - Hooks like the context, state, and reducer functions do not work in class components. Have to do things differently or use function components. 
+        - Why? There is no "this" keyword in function components, so the useState will handle it on the React side. 
+        - useState returns a pair of values: the current state and a function that updates it. 
+        - Can have lots of state variables of a global state object. 
+- useEffect() hook
+    - Side effects: Data fetching, setting up a subscription, manually changing DOM in react components 
+        - Two types: Those that require clean up and those that do not. 
+            - Effects without cleanup: Logging, network requests
+            - Effects with cleanup.
+    - useEffect() - Do something after render. Can use any props or state variables from the handlers passed to useEffect
+        - Runs after every render!    
+        - If the effect returns a function, React will run it when its time to clean up!
+
+React Native
+
+Apollo
+- What is Apollo Client? It is a comprehensive state management library for JavaScript. 
+    - Manage both local and remote data with GraphQL. 
+    - Data fetching, caching, pagination, local state.
+- ApolloClient object - URL of GraphQL server and instance of InMemoryCache.
+- ApolloProvider - similar to React's Context.Provider, places the client on the context so it can be accessed anywhere in the component tree. 
+- useQuery(QUERY_LITERAL) is a React hook that a component below the ApolloProvider can run on the ApolloClient, 
+- AWS Amplify + AppSync is a similar solution. (But Amplify may not have the same caching capabilities.)
+
+How does Proxmity do it? Uses Apollo. 
+- Describe the context that Proximity defines:
+    - AppContextType: typedef for context, includes a UserType (id, avatar, handle), a function to update user, a theme and theme type, a fdunction to toggle theme, number of unread messages, and a function to update unread messages. 
+    - Creates an empty context with this type using the createContext react hook, called AppContext
+    - Exports an AppContextProvider component that takes in props parameter.
+        - Creates the state variables using the useState hook described above
+        - Creates some functions that hook up to the "setters" from the pairs returned from useState
+        - Constructs an initial state object of the type above.
+        - Returns a provider for the AppContext context while passing in the default values. 
+            - NOTE: Includes {props.children}. This makes the AppContextProvider a "generic box" that will render whatever is passed to it as a child. 
+- Now, the primary entry App component starts with the ApolloProvider, which creates an Apollo Context Provider using a client defined in @app/graphql/client/index.ts.
+    - This client looks like it determines whether it should be built from HTTP or Web Socket depending on the operation / query, and builds the connection based on this with some error handling. Also creates a new InMemoryCache. 
+- After this ApolloClient, the AppContextProvider above is rendered. Then, an inner App component called SafeAreaApp is rendered from a different function above.
+- SafeAreaApp consumes the context from the AppContextProvider and does the following:
+    - Sets up two effects:
+        - One that asynchronously initializes the theme (loads a theme type from local storage, and then loads it into the context, with some error handling)
+        - Sets up an interval effect that runs every PollIntervals.lastSeen amount of time. This interval calls the updateLastSeen query from the useMutation hook (with a mutation object from @app/graphql/mutation called MUTATION_LAST_SEEN). Does something a little odd with {chats}, as its not declared anywhere. I think its retreived from the query.
+            - Computes number of unread messages from a helper util function and then updates the context with this value. 
+    - Render function contains a SafeAreaView with the container styles passed in. Within this SafeAreaView is a react-native StatusBar component (with styles), the AppNavigator component, and a FlashMessage component from the react-native-flash-message package.
+- AppNavigator
+    - Older component implementation of react-navigation. New React Navigation doesn't have a switch navigator, but i think all of the functionality can be implemented within a stack navigator. I already started to implement similar navigation.
+    - Top level Switch Navigator: Contains AppStack and AuthStack, default AuthStack. AuthStack has only LoginScreen route. AppStack has TabNavigator, MessageScreen, ConversationScreen, ProfileViewScreen, PostViewScreen. These are in a stack so can transition from one to another while being able to go back. 
+    - TabNavigator: Core "Home" TabBar. Has tabs for HomeScreen, ExploreScreen, UploadScreen, NotificationScreen, and ProfileScreen. Does lazy loading, and has a custom TabBar component located in @app/navigation/TabBarComponent. 
+- Let's talk Login Screen because its the default route.
+    - Hooks Used:
+        - Grabs the theme and user-update function from the global contextg.
+        - Uses Navigation hook (presumably to redirect if auth'd)
+        - Gets a reference to the createUser mutation call from Apollo
+        - Has state variables for initializing (bool), googleLoading (bool), appleLoading (bool), a termsConfirmationModal (bool), and authState (object). 
+        - Has a termsAndConditionsBottomSheetRef const from the react hook useRef(). Probably gives programmatic access to the component?
+    - Render function is a view (with styles), insertion of a content object (which is initialized to a loading indicator), the TermAdnConditionsBottomSheet component (and assigns the ref from the hook), and a ConfirmationModal for the terms and conditions (which is hidden by default, and has some exrta stuff.)
+    - Next, render function sets up an appleSignInButton if the device is iOS (if loading, it sets up the button to a loading view. Otherwise, it creates the button and adds the onAppleSignIn callback)
+    - Then, the render function waits for an initialization variable to be false, and if so sets a content varible that contains p much the entire login screen.
+        - This content includes a content view with title/subtitle text, a banner view with a LoginBanner component and an inner view (inner to banner view) that includes a button for signing in with Google (with press callback onGoogleSignIn), the insertion of the appleSignInButton variable which contains an iOS-only apple login (with callback onAppleSignIn), and a TouchableOpacity component that opens up the termsAndConditionsBottomSheetRef component. 
+    - The render function returns a container view, the content variable (which either contains a loading view or the main content of the login screen), the terms and conditions bottom sheet, and a confirmation modal. 
+    - Effects: Initialize function called.
+        - This async function calls loadToken() function, located in @app/utils/storage.ts. This function uses the react-native-storage package to load a token from key-value pair. Yet to be determined where this token is generated. After the token is retrieved async, the navigateToApp() function is called (also async)
+        - navigateToApp(token) - calls a sign-in query on the client, attempts to get back user data, then updates user object in global context, shows a welcome notification (function call from @app/utils/notifications.ts), and then navigates to the main App stack using a route. If this errors and not in dev mode (__dev__, not sure how this keyword works) then a signOut() function is called (located in @app/utils/authentication) which deletes multiple tokens (messaging and auth) from storage, calls signOut on firebase auth, and has error handling. 
+        - if the loadToken / navigateToApp functions throw an exception and it returns to the initialization function, there is a function for handling loginError and the setInitializing state function is set to false. 
+    - onAppleSignIn()
+        - Returns if appleLoading
+        - Uses a react-native-apple-authentication library. calls a performRequest() login function (async), gets token/nonce from response, checks if token exists, crafts an authResponse object, and sends this to processSocialSignIn(authResult, SocialSignInType.APPLE) function (in @app/utils/firebase).
+            - processSocialSignIn(authResult, type) - builds a credentials object using firebase helper functions depending on whether its a Google or Apple sign in (i.e. google signin has idToken and accessToken, apple sign in has token and nonce.), calls signInWithCredentials() on firebase auth object to officially sign in. from this firebase call, extracts some user data and signin token, builds an object and returns. 
+        - after the processSocialSignIn returns, onAppleSignIn calls processSignIn using the data returned.
+    - processSignIn() - takes in data returned from signInWithCredentials, checks to see if the user exists with a graphql query. if the user doesn't exist, the auth state of the global context is set and the terms and conditions modal is opened. otherwise, saveTokenAndNavigate() is called
+        - saveTokenAndNavigate() - saveToken to local storage, set all loading state variables to false, clear the auth state (????), and call navigateToApp(token)
+    - If the terms and conditions modal is opened, the button to close / confirm it callbacks to processNewUser()
+    - processNewUser() - closes the terms modal, extracts the auth state, calls createUser() which is a graphQL mutation(MUTATATION_CREATE_USER), and then saveTokenAndNavigate is called. 
+    - onGoogleSignIn() - very similar to onAppleSignIn. uses a google-specific function to get idToken and accessToken, crafts an authResult objecct, calls processSocialSignIn to get a standard authentication object from firebase, and then call processSignIn(). 
+
+    
+
+
