@@ -81,6 +81,24 @@ How does Proxmity do it? Uses Apollo.
     - processNewUser() - closes the terms modal, extracts the auth state, calls createUser() which is a graphQL mutation(MUTATATION_CREATE_USER), and then saveTokenAndNavigate is called. 
     - onGoogleSignIn() - very similar to onAppleSignIn. uses a google-specific function to get idToken and accessToken, crafts an authResult objecct, calls processSocialSignIn to get a standard authentication object from firebase, and then call processSignIn(). 
 
-    
+That is the end of the login screen! If auth'd, the navigation stack redirects too the App route which by default I believe goes to the first item in the stack. So the redirect to the AppStack will default to the TabNavigator, which is its own navigator that will default to the HomeScreen. Time for a deep dive into that!
 
-
+HomeScreen
+- Outside of the HomeScreen function component, a simple stylesheet is created with some flex boxes and theme stuff
+- In the component:
+    - Hook into context for user, theme, unreadMessages (all getters, no setters)
+    - Hook into navigation.
+    - Hook into an Apollo graphql query: QUERY_USER_FEED that takes in the current userId as a variable, and has a fetchPolicy of 'network-only'
+    - Hook into an Apollo graphql mutation: UPDATE_FCM_TOKEN (FCM = Firebase Cloud Messaging)
+    - A few effects set up: (TIL: If you pass an empty array to useEffect, the effect will only run the first time the DOM is updated (similar to OnComponentDidMount). If you pass variables into this array, the effect will execute when the variables change)
+        - One that calls initialize(). Initialize gets an fcmToken by calling initializeFCM() in @app/utils/firebase.ts. 
+            - initializeFCM() - If on android, sets up a nofication channel (which seems to be a related set of notifications. either all messaging or split into converations? seems like this function maybe shouldn't do this) Then, the function checks firebase messaging permissions, it requests permissions if it does not have them, and once it does it attempts to return a messaging token. 
+        - Once initializeFCM returns the fcmToken, it updates the graphql api with this token and the user ID with updateFcmToken() from the apollo hook.
+        - Another effect that runs once is the setup of a callback for when the fcmToken refreshes, which calls the graphql api update token mutation similar to the init function. The clean-up return callback treats the variable that stores the callback as a function, so im assuming this destroys the listener. 
+    - A few other functions: navigateToMessages() calls the navigate hook to the message screen.
+    - refreshControl() - Returns a RefreshControl component that has an onRefresh() callback, that executes a userFeedRefetch() function which seems to be returned from the useQuery(QUERY_USER_FEED) hook. 
+    - renderItem({item}) - Takes in data and returns a PostCard component.
+    -  After these function definitions, a placeholder content variable is created.
+    - Once the userFeedQueryLoading and userFeedQueryError variables are false (i.e. once the data has been successfully loaded), the data is extracted from the query and the content variable is assigned to a FlatGrid component, which hooks into the refreshControl function from above. Also has an itemDimension field (using responsiveWidth), verticalScrollIndicator disabled, items (data field) passing in the qyery, a SvgBanner component for when the passed list is empty, styling and spacing, and a function for how to render each item in the list. 
+    - After this, a function for returning an Icon component that sends the user to the messages is created.
+    - Finally, the actual render function returns a view, and inside this view there is a HomeHeader component that takes in the IconRight function from above (messaging icon), and the content that is either placeholder or the message feed. Yay!
