@@ -1,0 +1,17 @@
+2020 - 2021
+- idea created, research done on technologies
+- did initial project planning document
+- diving into other cloud react-native/graphql projects for ideas and inspo
+- boilerplate project created, successfully built and test build deployed to colin's phone
+- applied for school funding, got denied
+
+1/7/22
+- amplify project created and added to repo
+- created initial amplify / appsync graphql api 
+- created google cloud project to use google sign in
+- successfully deployed initial auth and api to staging. will test tomorrow
+
+1/8/22
+- solved some cocoapods issues with ffi. took a lot of debugging, marked it all down. 
+- added aws-amplify packages to frontend.
+- fixed some build errors related to aws-amplify and related packages. able to successfully deploy boilerplate to simulator and physical device. 

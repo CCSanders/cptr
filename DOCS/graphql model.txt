@@ -1,0 +1,76 @@
+graphql model
+
+data types
+- User
+    - User ID (ID type or string)
+    - Username (string)
+    - Name (string)
+    - Email (string)
+    - Bio (string)
+    - Posts (Post array)
+    - Following (User array)
+    - Followers (User array)
+    - BlockList (User array)
+    - PublicAccessType (string)
+    - FollowRequests (User array)
+    - Notifications (notifications array)
+- Post
+    - Post ID (ID type or string)
+    - URI (string)
+    - Creator (User)
+    - CreatedAt (DateTime)
+    - Caption (String)
+    - Comments (Comment array)
+    - LikedBy (User array)
+- Notification
+    - Notification ID (ID Type or String)
+    - TargetUser (User)
+    - SourceUser (User)
+    - CreatedAt (DateTime)
+    - NotificationType (string / enum)
+    - resource type (id, so any resource can be the cause of notification)
+- NotificationType (string or enum)
+    - Values: FOLLOW, COMMENT, LIKE, RECOMMEND_FOLLOW, TAG
+- Comment
+    - Comment ID (ID Type or String)
+    - CommentBody (String)
+    - Author (User)
+    - CreatedAt (DateTime)
+- ConnectionType (enum / string)
+    - Values: FOLLOWING, FOLLOWERS
+- LikeAction (enum / string)
+    - Values: LIKE, UNLIKE
+- ConnectionAction (enum / string)
+    - Values: FOLLOW, UNFOLLOW
+- PostReport
+    - Report ID (ID Type or String)
+    - Post ID (ID type)
+    - CreatedAt (datetime)
+    - Reason (ReportReason)
+    - CustomReason (Text)
+- ReportReason (enum / string)
+    - Values: SPAM, NUDITY_SEXUAL_ACTIVITY, HATE_SPEECH, FALSE_INFORMATION, BULLYING_OR_HARASSMENT, USER_IN_DANGER, ILLEGAL_OR_DANGEROUS_ACTIVITY, CUSTOM_REASON
+
+queries
+- getUser(userId): User
+- getUserConnections(userId, connectionType): User array
+- getNotifications(userId): Notification array
+- searchUsers(searcherId, searchText): User array
+- isHandleAvailable(userId, handle): boolean
+- getPost(postId): post
+- getUserPosts(userId) post array
+- getUserFeed(userId) post array
+
+mutations
+- createUser(): User
+- updateUser(): User
+- updateUserConnection(source, target, connectionAction): boolean?
+- createPost()
+- addComment
+- updateLikeAction(userId, postId, likeAction)
+- reportPost(postId, postReport, customReasonText)
+- editPost(postId, captionText)
+- deletePost(postId)
+- deleteComment(postId, commentId)
+- deleteNotification(notificationId)
+- toggleBlock(sourceUser, targetUser)
