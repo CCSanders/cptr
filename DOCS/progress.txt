@@ -14,4 +14,23 @@
 1/8/22
 - solved some cocoapods issues with ffi. took a lot of debugging, marked it all down. 
 - added aws-amplify packages to frontend.
-- fixed some build errors related to aws-amplify and related packages. able to successfully deploy boilerplate to simulator and physical device. 
+- fixed some build errors related to aws-amplify and related packages. able to successfully deploy boilerplate to simulator and physical device.
+- started building frontend auth workflow. it doesn't work currently, as federated sign in doesn't trigger a signIn auth event. need to test moving the hub and looking at more documentation. 
+   
+1/10/22
+- did a lot of work on auth workflow. its in a usable state now with federated sign in, decent ux, and storing an auth state in the app context.
+
+1/11/22
+- starting work on a profile init screen. added proper navigation 
+- need to work on api a bunch before continuing on frontend. struggled to get the content page to work in the amplify studio, so decided to try mocking the api locally
+- this showed a variety of issues, including the fact that none of the types were @models so no databases / tables were being generated. added this and started adding the relationships between models
+- the trickiest part is the followers / following relations with a user on other users. i think i got it in a decent spot, but i may have to add / extend resolvers? still working on figuring out graphql. basically creating a new UserConnection (i.e. when a user clicks "follow" on another user) needs to involve creating the connection object, and adding it to the source and destination users connection arrays. 
+- i got the apis to successfully mock but need to mess around with the built in mutations, as i haven't actually done anything since the successful mocks. then i need to deploy the new api and see if the amplify console likes it better. 
+
+1/13/22
+- started sucessfully mocking data using the locally hosted graphql browser
+- noticed some issues with my follower/following data model. attempted to fix a bunch of times and had some really dumb graphql errors. think there was some residual primary key info that was failing the dynamo requests for puts and deletes. 
+- finally fixed the dumb issues and wrote a mutation to have a user follow another user, automatically updating each of the users respective follower/following arrays with the relationship object. 
+- next? continue mocking, figure out what custom resolvers are needed (if any... handle exists?). add any custom mutations / queries if needed. then deploy api, and go back to designing full auth workflow including profile initialization. 
+
+1/15/22
