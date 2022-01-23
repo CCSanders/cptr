@@ -1,0 +1,30 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-cptr-staging-175318-authRole",
+      "UnauthRoleArn": "arn:aws:iam::008378905999:role/amplify-cptr-staging-175318-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::008378905999:role/amplify-cptr-staging-175318-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-cptr-staging-175318-deployment",
+      "UnauthRoleName": "amplify-cptr-staging-175318-unauthRole",
+      "StackName": "amplify-cptr-staging-175318",
+      "StackId": "arn:aws:cloudformation:us-east-1:008378905999:stack/amplify-cptr-staging-175318/b22edb30-6fe2-11ec-86d4-127e2c9f2829",
+      "AmplifyAppId": "d31e3xq9755nu1",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-cptr-staging-175318-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "auth": {
+        "cptr3fe45c1f": {}
+      },
+      "function": {
+        "cptr3fe45c1fCustomMessage": {
+          "REDIRECTURL": "https://2ndm861r4cko-staging.auth.us-east-1.amazoncognito.com/oauth2/idpresponse",
+          "EMAILSUBJECT": "CPTR Account Verification",
+          "EMAILMESSAGE": "Please click on this link to verify the creation of your CPTR account. If you did not create a CPTR account, disregard this email.",
+          "deploymentBucketName": "amplify-cptr-staging-175318-deployment",
+          "s3Key": "amplify-builds/cptr3fe45c1fCustomMessage-522b63614a4575703333-build.zip"
+        }
+      }
+    }
+  }
+}

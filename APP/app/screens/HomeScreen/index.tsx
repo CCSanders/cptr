@@ -1,7 +1,8 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Button, Image, StyleSheet, Text, View } from 'react-native';
 import Logo from '@app/assets/images/react-logo.png';
 import { Theme, MaterialColors, FontWeights, FontSizes } from '@app/theme';
+import { Auth } from 'aws-amplify';
 
 const HomeScreen = () => {
 
@@ -19,6 +20,8 @@ const HomeScreen = () => {
       <Text style={styles.item}>
         <Text style={{ color: MaterialColors.purple[300] }}>Creative By Default</Text>
       </Text>
+
+      <Button title="Test Logout button" onPress={() => Auth.signOut()} />
     </View>
   );
 };

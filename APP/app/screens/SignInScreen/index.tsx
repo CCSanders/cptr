@@ -1,14 +1,18 @@
-import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Button, Image, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
+import { Auth } from 'aws-amplify';
+
 import Logo from '@app/assets/images/react-logo.png';
 import { Theme, MaterialColors, FontWeights, FontSizes } from '@app/theme';
 
 const SignInScreen = () => {
 
-  return (
-    <View style={styles.container}>
+  let content = <></>;
+  content = (
+    <>
       <View style={styles.content}>
-        <Image source={Logo} style={styles.logo} />
         <View style={styles.headerContainer}>
           <Text style={styles.heading}>CPTR</Text>
           <Text style={styles.body}>
@@ -19,6 +23,14 @@ const SignInScreen = () => {
       <Text style={styles.item}>
         <Text style={{ color: MaterialColors.purple[300] }}>Creative By Default</Text>
       </Text>
+      <Button title="Sign in" onPress={() => Auth.federatedSignIn()} />
+      <Button title="Test Logout button" onPress={() => Auth.signOut()} />
+    </>
+  );
+
+  return (
+    <View style={styles.container}>
+      {content}
     </View>
   );
 };
@@ -43,7 +55,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     ...FontWeights.Light,
-    ...FontSizes.SubHeading,
+    ...FontSizes.Heading,
     color: Theme.colors.text_primary
   },
   body: {

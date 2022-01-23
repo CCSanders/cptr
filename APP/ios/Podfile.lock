@@ -206,6 +206,8 @@ PODS:
     - React-jsi (= 0.65.0)
     - React-perflogger (= 0.65.0)
   - React-jsinspector (0.65.0)
+  - react-native-netinfo (7.1.7):
+    - React-Core
   - react-native-safe-area-context (3.3.0):
     - React-Core
   - React-perflogger (0.65.0)
@@ -272,13 +274,19 @@ PODS:
     - React-cxxreact (= 0.65.0)
     - React-jsi (= 0.65.0)
     - React-perflogger (= 0.65.0)
+  - RNAWSCognito (5.2.4):
+    - React-Core
+  - RNCAsyncStorage (1.15.14):
+    - React-Core
   - RNCMaskedView (0.1.11):
     - React
   - RNGestureHandler (1.10.3):
     - React-Core
+  - RNInAppBrowser (3.6.3):
+    - React-Core
   - RNReanimated (1.8.0):
     - React
-  - RNScreens (3.5.0):
+  - RNScreens (3.10.1):
     - React-Core
     - React-RCTImage
   - RNSVG (12.1.1):
@@ -305,6 +313,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -318,8 +327,11 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - RNAWSCognito (from `../node_modules/amazon-cognito-identity-js`)
+  - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNInAppBrowser (from `../node_modules/react-native-inappbrowser-reborn`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -362,6 +374,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-netinfo:
+    :path: "../node_modules/@react-native-community/netinfo"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   React-perflogger:
@@ -388,10 +402,16 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/runtimeexecutor"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNAWSCognito:
+    :path: "../node_modules/amazon-cognito-identity-js"
+  RNCAsyncStorage:
+    :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNInAppBrowser:
+    :path: "../node_modules/react-native-inappbrowser-reborn"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -421,6 +441,7 @@ SPEC CHECKSUMS:
   React-jsi: 875bcbe2037c9cae07fbda7dd5827fbca06cbdc6
   React-jsiexecutor: 11ec08ad247abb44113ccb3d2b66f7e856d1cdf4
   React-jsinspector: 2aa5dc1b9a02a81c0dcc70c00f2cbe1cd4b875c4
+  react-native-netinfo: 27f287f2d191693f3b9d01a4273137fcf91c3b5d
   react-native-safe-area-context: 61c8c484a3a9e7d1fda19f7b1794b35bbfd2262a
   React-perflogger: 494c61caaf9b7da0a0a612fa4ed570ab7ab5819b
   React-RCTActionSheet: 0ea18583618e2451889be1ce1f658ae8cb436b2e
@@ -434,14 +455,17 @@ SPEC CHECKSUMS:
   React-RCTVibration: ca17687ea259e8b6bbd4ad74f1f6ec87bff845d8
   React-runtimeexecutor: a9a1ac6a60389c3c588fd9b9158a30ed4d8d28a4
   ReactCommon: c11b11a5dc8187826144b7b3d72125c77a1b7b1a
+  RNAWSCognito: 333af0842a22f0616eb66535d02d9aea73704809
+  RNCAsyncStorage: ea6b5c280997b2b32a587793163b1f10e580c4f7
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
+  RNInAppBrowser: 3ff3a3b8f458aaf25aaee879d057352862edf357
   RNReanimated: 955cf4068714003d2f1a6e2bae3fb1118f359aff
-  RNScreens: 01ab149b5dd5c27f5ff26741b1d2bdf2cee1af35
+  RNScreens: 522705f2e5c9d27efb17f24aceb2bf8335bc7b8e
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   Yoga: 1561f557b0c2b6047a91f7619f666134e2288916
 
-PODFILE CHECKSUM: 298e038bd3843a35027d12cfc412f6b32274b2c8
+PODFILE CHECKSUM: 6b158c3e38a6a298dd038b72960629aa1cad57ef
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.11.2

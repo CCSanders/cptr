@@ -34,3 +34,8 @@
 - next? continue mocking, figure out what custom resolvers are needed (if any... handle exists?). add any custom mutations / queries if needed. then deploy api, and go back to designing full auth workflow including profile initialization. 
 
 1/15/22
+- same as on the 13rd, tried to write custom queries / mutations and fix the follow / following relationship. i think i need to take a step back and do more research and planning 
+
+1/23/22
+- added some secondary indices to the data model
+- current goal is to successfully query the api once we have the email from the auth. i have successfully extracted the email from auth into the auth object and am now trying to programmatically execute one of the queries on the secondary index i created. 

@@ -1,0 +1,15 @@
+projects:
+  cptr:
+    schemaPath: amplify/backend/api/cptr/build/schema.graphql
+    includes:
+      - app/graphql/**/*.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: app/graphql/API.ts
+        docsFilePath: app/graphql
+extensions:
+  amplify:
+    version: 3

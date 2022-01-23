@@ -1,0 +1,94 @@
+input AMPLIFY {
+  globalAuthRule: AuthRule = {allow: public}
+}
+
+type User @model
+{
+  handle: String! @index(name: "byHandle", queryField: "userByHandle")
+  name: String!
+  email: String! @index(name: "byEmail", queryField: "userByEmail")
+  bio: String
+  avatar: String
+  posts: [Post!] @hasMany
+  accessType: AccessType!
+  notifications: [Notification!] @hasMany
+  likedPosts: [Post!] @manyToMany(relationName: "PostLikes")
+  comments: [Comment!] @hasMany
+  blockList: [User!] @hasMany
+  followRequests: [User!] @hasMany
+  followers: [FollowRelationship!] @hasMany(indexName: "byFolloweeId")
+  following: [FollowRelationship!] @hasMany(indexName: "byFollowerId")
+}
+
+type FollowRelationship @model(mutations: {create: "createFollowRelationship", delete: "deleteFollowRelationship", update: null})
+{
+  followerId: ID! @index(name: "byFollowerId", queryField: "followRelationshipsByFollowerId")
+  followeeId: ID! @index(name: "byFolloweeId", queryField: "followRelationshipsByFolloweeId")
+}
+
+type Post @model {
+  uri: String!
+  creator: User! @belongsTo
+  caption: String
+  comments: [Comment!] @hasMany
+  likedBy: [User!] @manyToMany(relationName: "PostLikes")
+}
+
+type Comment @model {
+  body: String!
+  creator: User! @belongsTo
+  parent: Post! @belongsTo
+}
+
+type Notification @model {
+  targetUser: User!  @belongsTo
+  sourceId: User!
+  type: NotificationType!
+  resource: ID!
+}
+
+type PostReport @model {
+  post: Post! @hasOne
+  reason: ReportReason!
+  customReason: String
+}
+
+enum LikeAction {
+  LIKE
+  UNLIKE
+}
+
+enum ConnectionAction {
+  FOLLOW
+  UNFOLLOW
+}
+
+enum ConnectionType {
+  FOLLOWING
+  FOLLOWERS
+}
+
+enum ReportReason {
+  SPAM
+  NUDITY_SEXUAL_ACTIVITY
+  HATE_SPEECH
+  FALSE_INFORMATION
+  BULLYING_OR_HARASSMENT
+  USER_IN_DANGER
+  ILLEGAL_OR_DANGEROUS_ACTIVITY
+  CUSTOM_REASON
+}
+
+enum NotificationType {
+  FOLLOW
+  LIKE
+  COMMENT
+  RECOMMENDED_FOLLOW
+  POST_TAG
+}
+
+enum AccessType {
+  PUBLIC
+  PRIVATE
+}
+ 

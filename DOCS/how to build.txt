@@ -22,7 +22,18 @@ Yarn Clean: Broken currently (see: https://github.com/pmadruga/react-native-clea
 
 Error when running pod install: missing compatible arch. 
 Solution: M1 Mac Issues, see: https://stackoverflow.com/questions/64901180/running-cocoapods-on-apple-silicon-m1
+   - Had so many errors with this. Now the cocoapods install command is 'arch -x86_64 pod install'
+   - But i had issues installing ffi in order to run that new cocoapods command. Things that I did to eventually get it working:
+        - Reinstalled some tools with 'xcode-select --install'
+        - Needed ruby-dev but local version of Ruby on Mac doesn't support it, so had to install a ruby version manager. 'brew install rbenv ruby-build'
+        - Installed ruby version 2.6.9 with 'rb install 2.6.9' -> 'rbenv global 2.6.9' -> 'rbenv rehash' -> 'echo 'eval "$(rbenv init -)"' >> ~/.zshrc' -> 'source ~/.zshrc'
+        - Then ffi installed successfully but the arch pod install command still failed. Said it needed cocopoads. 'brew install cocoapods' said cocoapods said it was already installed, but 'gem install cocoapods' installed something'
+        - Finally the 'arch -x86_64 pod install' command worked. But is this gonna work for actually building it??
 
 When compiling through Xcode: Error: Could not find node. Make sure it is in bash PATH - Command PhaseScriptExecution failed with a nonzero exit code. 
 Solution: sudo ln -s $(which node) /usr/local/bin/node
 
+Duplicate files or mocks due to AWS directory '#current-cloud-backend'.
+Solution: AWS creates a copy of your current cloud backend configuration in amplify/#current-cloud-backend/. Don't need to build app, so we can ignore to get rid of the error. Added a regex blacklist statement in metro.config.js. 
+
+Build fails: Something to do with SysUio.o and RCT-Folly. Comment this line out of Pods/RCT-Folly/folly/portability/Time.h "typedef uint8_t clockid_t;". Why does this fix this?

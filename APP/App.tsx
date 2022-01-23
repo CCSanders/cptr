@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import AppNavigator from './app/navigation';
-import { Theme } from './app/theme';
+import { AppContext, AppContextProvider } from './app/context';
+import AppNavigator from '@app/navigation';
+import { Theme } from '@app/theme';
 
 const SafeAreaApp = () => {
+
   return (
     <SafeAreaProvider style={styles().container}>
       <AppNavigator />
@@ -15,7 +17,9 @@ const SafeAreaApp = () => {
 
 const App = () => {
   return (
-    <SafeAreaApp/>
+    <AppContextProvider>
+      <SafeAreaApp />
+    </AppContextProvider>
   );
 };
 

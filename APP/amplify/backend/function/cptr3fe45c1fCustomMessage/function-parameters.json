@@ -1,0 +1,26 @@
+{
+  "trigger": true,
+  "modules": [
+    "verification-link"
+  ],
+  "parentResource": "cptr3fe45c1f",
+  "functionName": "cptr3fe45c1fCustomMessage",
+  "resourceName": "cptr3fe45c1fCustomMessage",
+  "parentStack": "auth",
+  "triggerEnvs": [
+    {
+      "key": "RESOURCENAME",
+      "value": "resourceName"
+    }
+  ],
+  "triggerDir": "/opt/homebrew/lib/node_modules/@aws-amplify/cli/node_modules/@aws-amplify/amplify-category-auth/provider-utils/awscloudformation/triggers/CustomMessage",
+  "triggerTemplate": "CustomMessage.json.ejs",
+  "triggerEventPath": "CustomMessage.event.json",
+  "roleName": "cptr3fe45c1fCustomMessage",
+  "skipEdit": true,
+  "REDIRECTURL": "https://2ndm861r4cko-staging.auth.us-east-1.amazoncognito.com/oauth2/idpresponse",
+  "EMAILSUBJECT": "CPTR Account Verification",
+  "EMAILMESSAGE": "Please click on this link to verify the creation of your CPTR account. If you did not create a CPTR account, disregard this email.",
+  "RESOURCENAME": "resourceName",
+  "enableCors": false
+}

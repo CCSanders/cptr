@@ -1,0 +1,58 @@
+need to add custom resolvers for the custom endpoints. 
+
+here are the custom top level objects:
+
+type Query {
+  getUserConnections(id: String!, type: ConnectionType!): [User!]
+  getNotifications(id: String!): [Notification!]
+  searchUsers(id: String!, searchText: String!): [User!]
+  isHandleAvailable(handle: String!): Boolean!
+  getUserPosts(id: String!): [Post!]
+  getUserFeed(id: String!): [Post!]
+  getBlockedUsers(id: String!): [User!]
+}
+
+type Mutation {
+  updateLikeAction(id: String!, postId: String!, action: LikeAction!): Post!
+  reportPost(postId: String!, reason: ReportReason!, customReason: String): Post!
+  editPost(postId: String!, caption: String!): Post!
+  toggleBlock(sourceUser: String!, targetUser: String!): Boolean!
+}
+
+
+here is a custom query i wrote for listUserFollowers, but it really might not be necessary
+
+/* tslint:disable */
+/* eslint-disable */
+
+export const listUserFollowers = /* GraphQL */ `
+    query ListUserFollowers($userId: ID!) {
+        getUser(id: $userId) {
+            followers {
+                items {
+                    followerId
+                }
+            }
+        }
+    }
+`;
+
+and a custom mutation:
+
+export const followUser = /* GraphQL */ `
+    mutation FollowUser($followeeId: ID!, $followerId: ID!) {
+        createFollowRelationship(
+            input: {
+                followerId: $followerId, 
+                followeeId: $followeeId, 
+                userFollowersId: $followeeId, 
+                userFollowingId: $followerId
+        }) {
+            followeeId
+            followerId
+            userFollowersId
+            userFollowingId
+        }
+    }
+`;
+
