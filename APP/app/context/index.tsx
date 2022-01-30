@@ -1,4 +1,4 @@
-import { API, Auth, Hub } from 'aws-amplify';
+import { API, Auth, graphqlOperation, Hub } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
 
 import React, { useState, createContext, useEffect } from 'react';
@@ -11,7 +11,8 @@ type UserContextType = {
     avatar: string,
     handle: string,
     email: string,
-    initialized: boolean
+    initialized: boolean,
+    loaded: boolean
 };
 
 type AuthContextType = {
@@ -36,7 +37,8 @@ export const AppContextProvider = props => {
         avatar: '',
         handle: '',
         email: '',
-        initialized: false
+        initialized: false,
+        loaded: false
     };
 
     const [user, setUser] = useState<UserContextType>(defaultUserValues);
@@ -92,7 +94,7 @@ export const AppContextProvider = props => {
 
     // Gets user data to put in the global context after successfully authenticating with Cognito.
     const processSignIn = async (email: string) => {
-        
+
         if (email == undefined || email == '' || email == null) {
             console.warn("Undefined behavior: Sign-in event occured but failed to extract email from auth context data.");
 
@@ -100,14 +102,22 @@ export const AppContextProvider = props => {
         }
 
         gql(queries.userByEmail, {
-            email: String(email)
-        }).then((user) => {
-            console.log(user);
+            email
+        }).then((users) => {
+            console.log(users.data);
+            if (users.data && users.data["userByEmail"] && users.data["userByEmail"]["items"]) {
+                const userData = users.data["userByEmail"]["items"][0];
+                if (userData === undefined) {
+                    console.log("Auth'd successfully but failed to load a user with the given email, redirecting to sign up screen: ", email);
+                }
+
+                updateUser({...user, loaded: true});
+            }
         }).catch((error) => {
             console.warn("Failed to get user in processSignIn(): ", error);
         });
-
     }
+
 
     useEffect(() => {
         initAuthState();
