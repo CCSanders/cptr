@@ -1,0 +1,5 @@
+Amplify Bugs
+- The API.graphql operation is weird with typescript, as it returns the "promise | observable" type which makes typescript unhappy.
+    - Fix is being pulled eventually, track here: https://github.com/aws-amplify/amplify-js/pull/9197
+- While mocking the API, after creating a record with the @model decorator and then trying access that data, the access query fails because _version is null. 
+    - https://github.com/aws-amplify/amplify-cli/issues/9546

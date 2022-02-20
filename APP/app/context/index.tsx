@@ -6,22 +6,24 @@ import React, { useState, createContext, useEffect } from 'react';
 import * as queries from '../graphql/queries';
 import gql from '../utils/api';
 
-type UserContextType = {
+export type UserContextType = {
     id: string,
-    avatar: string,
+    name: string,
+    avatar: string | null,
     handle: string,
     email: string,
+    bio: string | null
     initialized: boolean,
     loaded: boolean
 };
 
-type AuthContextType = {
+export type AuthContextType = {
     state: string,
     user: CognitoUser | null,
     userEmail: string | null
 }
 
-type AppContextType = {
+export type AppContextType = {
     user: UserContextType,
     updateUser: (user: UserContextType) => void
     auth: AuthContextType
@@ -34,8 +36,10 @@ export const AppContextProvider = props => {
 
     const defaultUserValues = {
         id: '',
-        avatar: '',
+        avatar: null,
         handle: '',
+        name: '',
+        bio: '',
         email: '',
         initialized: false,
         loaded: false

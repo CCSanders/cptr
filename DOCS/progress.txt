@@ -39,3 +39,12 @@
 1/23/22
 - added some secondary indices to the data model
 - current goal is to successfully query the api once we have the email from the auth. i have successfully extracted the email from auth into the auth object and am now trying to programmatically execute one of the queries on the secondary index i created. 
+
+1/30/22
+- fixed the api wrapper to cement the way graphql is used in the application
+- got the "processSignIn" function in a better state, now the api is successfully queried by email after auth to get user data. 
+
+Next time: 
+- Remove the "_version" field from one of the code-gen'd gql queries. Maybe disable code-gen queries as a whole until the mocking bugs are fixed. 
+- After removing the version field, make sure the processSignIn logic works with a mocked user. 
+- Look into react native camera plugin and putting the ffmpeg binaries in the application. 
