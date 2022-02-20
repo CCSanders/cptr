@@ -1,12 +1,11 @@
 import React, { useContext } from 'react';
-import { Button, Image, StyleSheet, Text, View } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { Button, Image, StyleSheet, Text, View, TextInput } from 'react-native';
 
 import Logo from '@app/assets/images/react-logo.png';
 import { Theme, MaterialColors, FontWeights, FontSizes } from '@app/theme';
 
 import { AppContext } from '../../context';
-import createProfileData from 'utils/auth';
+import createProfileData from '../../utils/auth';
 
 const ProfileInitScreen = () => {
 
@@ -23,15 +22,15 @@ const ProfileInitScreen = () => {
 
     updateShowErrorMessage(false);
 
-    if (!handle.match("/^[a-zA-Z0-9_]{2,15}$/")) {
+    if (!(/^[a-zA-Z0-9_]{2,15}$/.test(handle))) {
       updateErrorMessage("Your handle can only contain letters, numbers, and underscores.\n It also must be at least 2 characters long and no longer than 15 characters.");
       updateShowErrorMessage(true);
       return;
     }
 
-    if(auth.userEmail){
+    if (auth.userEmail) {
       createProfileData(auth.userEmail, handle, name, bio, updateUser);
-    }else {
+    } else {
       console.error("Fatal: Attempting to create a user profile when user has not been federated.");
     }
   };
@@ -49,15 +48,17 @@ const ProfileInitScreen = () => {
       </View>
       <Text style={styles.item}>
         <Text style={{ color: MaterialColors.purple[300] }}>Creative By Default</Text>
-        <TextInput placeholder="Handle (what comes after the @, unique)" onChangeText={onChangeHandle} />
-        <TextInput placeholder="Display Name (what you want to be displayed as, not unique)" onChangeText={onChangeName} />
-        <TextInput placeholder="A little info about yourself (if you want)" multiline numberOfLines={3} onChangeText={onChangeBio} />
+      </Text>
+      <View>
+        <TextInput style={styles.item} placeholder="Handle (what comes after the @, unique)" placeholderTextColor={MaterialColors.grey[600]} onChangeText={onChangeHandle} />
+        <TextInput style={styles.item} placeholder="Display Name (what you want to be displayed as, not unique)" placeholderTextColor={MaterialColors.grey[600]} onChangeText={onChangeName} />
+        <TextInput style={styles.item} placeholder="A little info about yourself (if you want)" placeholderTextColor={MaterialColors.grey[600]} onChangeText={onChangeBio} />
         <Button title="Create your account!" onPress={createProfile} />
 
         {showErrorMessage &&
           <Text style={{ color: MaterialColors.red[300] }}>{errorMessage}</Text>
-        }
-      </Text>
+        }      
+      </View>
     </View >
   );
 };

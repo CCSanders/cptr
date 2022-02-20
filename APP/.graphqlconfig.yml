@@ -8,8 +8,10 @@ projects:
     extensions:
       amplify:
         codeGenTarget: typescript
-        generatedFileName: app/graphql/API.ts
+        generatedFileName: src/API.ts
         docsFilePath: app/graphql
+        region: us-east-1
+        apiId: null
 extensions:
   amplify:
     version: 3

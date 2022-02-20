@@ -15,21 +15,6 @@ const NotificationType = {
   "POST_TAG": "POST_TAG"
 };
 
-const ConnectionType = {
-  "FOLLOWING": "FOLLOWING",
-  "FOLLOWERS": "FOLLOWERS"
-};
-
-const ConnectionAction = {
-  "FOLLOW": "FOLLOW",
-  "UNFOLLOW": "UNFOLLOW"
-};
-
-const LikeAction = {
-  "LIKE": "LIKE",
-  "UNLIKE": "UNLIKE"
-};
-
 const ReportReason = {
   "SPAM": "SPAM",
   "NUDITY_SEXUAL_ACTIVITY": "NUDITY_SEXUAL_ACTIVITY",
@@ -41,18 +26,35 @@ const ReportReason = {
   "CUSTOM_REASON": "CUSTOM_REASON"
 };
 
-const { User, Post, Comment, Notification, PostReport } = initSchema(schema);
+const LikeAction = {
+  "LIKE": "LIKE",
+  "UNLIKE": "UNLIKE"
+};
+
+const ConnectionAction = {
+  "FOLLOW": "FOLLOW",
+  "UNFOLLOW": "UNFOLLOW"
+};
+
+const ConnectionType = {
+  "FOLLOWING": "FOLLOWING",
+  "FOLLOWERS": "FOLLOWERS"
+};
+
+const { User, Post, Comment, Notification, FollowRelationship, PostReport, PostLikes } = initSchema(schema);
 
 export {
-  AccessType,
-  NotificationType,
-  ConnectionType,
-  ConnectionAction,
-  LikeAction,
-  ReportReason,
   User,
   Post,
   Comment,
   Notification,
-  PostReport
+  FollowRelationship,
+  PostReport,
+  PostLikes,
+  AccessType,
+  NotificationType,
+  ReportReason,
+  LikeAction,
+  ConnectionAction,
+  ConnectionType
 };

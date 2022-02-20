@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, Image, StyleSheet, Text, View } from 'react-native';
-import Logo from '@app/assets/images/react-logo.png';
-import { Theme, MaterialColors, FontWeights, FontSizes } from '@app/theme';
+
 import { Auth } from 'aws-amplify';
 
+import Logo from '@app/assets/images/react-logo.png';
+import { Theme, MaterialColors, FontWeights, FontSizes } from '@app/theme';
+import { AppContext } from '../../context';
+
 const HomeScreen = () => {
+
+  const {user} = useContext(AppContext);
 
   return (
     <View style={styles.container}>
@@ -13,7 +18,7 @@ const HomeScreen = () => {
         <View style={styles.headerContainer}>
           <Text style={styles.heading}>CPTR</Text>
           <Text style={styles.body}>
-            This is the home screen!
+            Welcome {user.name}! This is the home screen!
           </Text>
         </View>
       </View>
