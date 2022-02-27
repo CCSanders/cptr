@@ -44,7 +44,14 @@
 - fixed the api wrapper to cement the way graphql is used in the application
 - got the "processSignIn" function in a better state, now the api is successfully queried by email after auth to get user data. 
 
+I missed a few times I've worked on it at this point, but the whole auth-userdata workflow is pretty much done.
+
+2/27/22
+- Added vision camera and ffmpeg packages
+- Had to fix a bunch of build issues while adding these. Yay for M1 Macs!! 
+- Created camera page and capture button. Currently successfully captures four images, adds them to array, and prints out the data to console. 
+
 Next time: 
-- Remove the "_version" field from one of the code-gen'd gql queries. Maybe disable code-gen queries as a whole until the mocking bugs are fixed. 
-- After removing the version field, make sure the processSignIn logic works with a mocked user. 
-- Look into react native camera plugin and putting the ffmpeg binaries in the application. 
+- Pass the image array into FFMPEG. 
+- Successfully create a gif as intended
+- Create a PostCaptureView screen, route to that screen, and display the capture full screen. 

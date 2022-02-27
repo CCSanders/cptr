@@ -58,6 +58,7 @@ const CaptureScreen = () => {
           isActive={isFocused}
           onInitialized={onInitialized}
           onError={onError}
+          photo={true}
         />
       )}
 

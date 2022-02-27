@@ -23,7 +23,7 @@ import Reanimated, {
 } from 'react-native-reanimated';
 
 import type { Camera, PhotoFile, TakePhotoOptions, TakeSnapshotOptions, VideoFile } from 'react-native-vision-camera';
-import { createAsyncDelay } from 'utils';
+import { createAsyncDelay } from '../../../utils';
 
 const CAPTURE_BUTTON_SIZE = 78;
 const BORDER_WIDTH = CAPTURE_BUTTON_SIZE * 0.1;
@@ -62,11 +62,7 @@ const CaptureButton: React.FC<Props> = ({
             // play flash effect
 
             const photo1 = await camera.current.takePhoto({
-                photoCodec: 'png',
-                qualityPrioritization: 'speed',
-                flash: false,
-                quality: 90,
-                skipMetadata: true
+                qualityPrioritization: 'balanced',
             });
 
             await createAsyncDelay(100);
@@ -74,11 +70,7 @@ const CaptureButton: React.FC<Props> = ({
             // play flash effect
 
             const photo2 = await camera.current.takePhoto({
-                photoCodec: 'png',
-                qualityPrioritization: 'speed',
-                flash: false,
-                quality: 90,
-                skipMetadata: true
+                qualityPrioritization: 'balanced',
             });
 
             await createAsyncDelay(100);
@@ -86,11 +78,7 @@ const CaptureButton: React.FC<Props> = ({
             // play flash effect
 
             const photo3 = await camera.current.takePhoto({
-                photoCodec: 'png',
-                qualityPrioritization: 'speed',
-                flash: false,
-                quality: 90,
-                skipMetadata: true
+                qualityPrioritization: 'balanced',
             });
 
             await createAsyncDelay(100);
@@ -98,11 +86,7 @@ const CaptureButton: React.FC<Props> = ({
             // play flash effect
 
             const photo4 = await camera.current.takePhoto({
-                photoCodec: 'png',
-                qualityPrioritization: 'speed',
-                flash: false,
-                quality: 90,
-                skipMetadata: true
+                qualityPrioritization: 'balanced',
             });
 
             const photo_array = [photo1, photo2, photo3, photo4, photo4, photo3, photo2, photo1];
