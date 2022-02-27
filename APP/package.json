@@ -28,6 +28,7 @@
     "amazon-cognito-identity-js": "^5.2.4",
     "aws-amplify": "^4.3.12",
     "aws-amplify-react-native": "^6.0.2",
+    "ffmpeg-kit-react-native": "^4.5.1",
     "react": "17.0.2",
     "react-native": "0.65.0",
     "react-native-gesture-handler": "^1.10.3",
@@ -37,6 +38,7 @@
     "react-native-screens": "^3.10.1",
     "react-native-svg": "^12.1.1",
     "react-native-vector-icons": "^8.1.0",
+    "react-native-vision-camera": "^2.12.0",
     "typescript": "^4.3.5"
   },
   "devDependencies": {
