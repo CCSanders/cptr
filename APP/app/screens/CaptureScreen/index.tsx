@@ -1,24 +1,46 @@
-import React from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
+import { useIsFocused } from '@react-navigation/core';
+
+import { Camera, CameraRuntimeError, frameRateIncluded, useCameraDevices, PhotoFile } from 'react-native-vision-camera';
+
 import Logo from '@app/assets/images/react-logo.png';
 import { Theme, MaterialColors, FontWeights, FontSizes } from '@app/theme';
 
+
+
 const CaptureScreen = () => {
+
+  const camera = useRef<Camera>(null);
+
+  const [isCameraInitialized, setIsCameraInitialized] = useState(false);
+  const isFocused = useIsFocused();
+
+  const onInitialized = useCallback(() => {
+    console.log('Camera initialized!');
+    setIsCameraInitialized(true);
+  }, []);
+
+  const onError = useCallback((error: CameraRuntimeError) => {
+    console.error(error);
+  }, []);
+
+  const devices = useCameraDevices();
+  const device = devices.back;
+
 
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
-        <Image source={Logo} style={styles.logo} />
-        <View style={styles.headerContainer}>
-          <Text style={styles.heading}>CPTR</Text>
-          <Text style={styles.body}>
-            This is the capture screen!
-          </Text>
-        </View>
-      </View>
-      <Text style={styles.item}>
-        <Text style={{ color: MaterialColors.purple[300] }}>Creative By Default</Text>
-      </Text>
+      {device != null && (
+        <Camera
+          ref={camera}
+          style={StyleSheet.absoluteFill}
+          device={device}
+          isActive={isFocused}
+          onInitialized={onInitialized}
+          onError={onError}
+        />
+      )}
     </View>
   );
 };
