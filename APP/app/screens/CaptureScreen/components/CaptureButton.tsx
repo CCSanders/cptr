@@ -89,7 +89,7 @@ const CaptureButton: React.FC<Props> = ({
                 qualityPrioritization: 'balanced',
             });
 
-            const photo_array = [photo1, photo2, photo3, photo4, photo4, photo3, photo2, photo1];
+            const photo_array = [photo1, photo2, photo3, photo4];
 
             onCapture(photo_array);
 

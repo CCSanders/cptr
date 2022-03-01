@@ -3,7 +3,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { HomeScreen, CaptureScreen, ExploreScreen, ProfileScreen, SignInScreen, ProfileInitScreen } from '../screens';
+import { 
+  HomeScreen, 
+  CaptureScreen, 
+  CapturePreviewScreen,
+  ExploreScreen, 
+  ProfileScreen, 
+  SignInScreen, 
+  ProfileInitScreen 
+} from '../screens';
 import { AppContext } from '../context';
 
 
@@ -25,13 +33,23 @@ function ProfileInitStackScreen() {
   );
 };
 
+const CaptureStack = createStackNavigator();
+function CaptureStackScreen() {
+  return (
+    <CaptureStack.Navigator screenOptions={{ headerShown: false }}>
+      <CaptureStack.Screen name="CaptureScreen" component={CaptureScreen} />
+      <CaptureStack.Screen name="CapturePreviewScreen" component={CapturePreviewScreen} />
+    </CaptureStack.Navigator>
+  );
+}
+
 const HomeNavigator = createBottomTabNavigator();
 function HomeNavigatorScreen() {
   return (
     <HomeNavigator.Navigator screenOptions={{ headerShown: false }}>
       <HomeNavigator.Screen name="Home" component={HomeScreen} />
       <HomeNavigator.Screen name="Explore" component={ExploreScreen} />
-      <HomeNavigator.Screen name="Capture" component={CaptureScreen} />
+      <HomeNavigator.Screen name="CaptureStack" component={CaptureStackScreen} />
       <HomeNavigator.Screen name="Profile" component={ProfileScreen} />
     </HomeNavigator.Navigator>
   );

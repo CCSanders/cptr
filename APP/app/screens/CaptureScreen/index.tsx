@@ -5,11 +5,15 @@ import { useIsFocused } from '@react-navigation/core';
 import { Camera, CameraRuntimeError, frameRateIncluded, useCameraDevices, PhotoFile } from 'react-native-vision-camera';
 import Reanimated, { Extrapolate, interpolate, useAnimatedGestureHandler, useAnimatedProps, useSharedValue } from 'react-native-reanimated';
 
+import { FFmpegKit, FFmpegKitConfig, ReturnCode } from 'ffmpeg-kit-react-native';
+import RNFS from 'react-native-fs';
+
 import Logo from '@app/assets/images/react-logo.png';
 import { Theme, MaterialColors, FontWeights, FontSizes } from '@app/theme';
 import CaptureButton from './components/CaptureButton';
+import { images_to_cptr_pipeline } from 'utils/image_processing';
 
-const CaptureScreen = () => {
+const CaptureScreen = ({ navigation }) => {
 
   const camera = useRef<Camera>(null);
 
@@ -39,14 +43,31 @@ const CaptureScreen = () => {
   }, []);
 
   const onCapture = useCallback((photo_array: PhotoFile[]) => {
+
     console.log(`Media captured! ${JSON.stringify(photo_array)}`);
-    
+
     //process into gif
     //go to page that shows gif before publishing.. 
+    let cptrPath = `${RNFS.CachesDirectoryPath}/temp_cptr.gif`;
+    FFmpegKitConfig.selectDocumentForWrite()
 
+    let image_to_cptr_command = images_to_cptr_pipeline(photo_array, cptrPath);
+    FFmpegKit.executeAsync(image_to_cptr_command, async (session) => {
 
-  }, [])
+      const returnCode = await session.getReturnCode();
 
+      if (ReturnCode.isSuccess(returnCode)) {
+        console.log("Successfully executed image_to_cptr pipeline!")
+      } else {
+        console.warn("Failed to execute image_to_cptr pipeline!");
+      }
+
+      navigation.navigate('CapturePreviewScreen', {
+        cptrTmpUri: cptrPath
+      });
+    });
+
+  }, []);
 
   return (
     <View style={styles.container}>

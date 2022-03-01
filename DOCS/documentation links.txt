@@ -1,2 +1,3 @@
 https://github.com/kkroening/ffmpeg-python
 http://ffmpeg.org/
+https://github.com/tanersener/ffmpeg-kit/tree/main/react-native
