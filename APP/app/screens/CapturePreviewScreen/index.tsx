@@ -1,17 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
+import RNFS from 'react-native-fs';
 import Logo from '@app/assets/images/react-logo.png';
+import CPTR from '@app/assets/images/out.gif';
 import { Theme, MaterialColors, FontWeights, FontSizes } from '@app/theme';
 
 const CapturePreviewScreen = ({ route, navigation }) => {
 
   const { cptrTmpUri } = route.params;
 
+  const [imageUri, setImageUrl] = useState('')
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  useEffect(() => {
+    RNFS.exists(cptrTmpUri).then( exists => {
+      if(exists){
+        setImageUrl('file://' + cptrTmpUri);
+        setImageLoaded(true)
+        console.log("image set successfully from " + cptrTmpUri)
+      }
+    })
+  }, [])
+
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
-        <Image source={cptrTmpUri} style={StyleSheet.absoluteFill} />
-      </View>
+        {imageLoaded && (
+          <Image
+            style={{
+              height: '100%',
+              width: '100%',
+              resizeMode: 'cover'
+            }}
+            source={{uri: imageUri}}
+            defaultSource={CPTR}
+            onError={(error) => { console.warn("failed to load image in capturepreviewscreen", error) }}
+            onLoad={(event) => { console.log("successfully loaded image in capturepreviewscreen", event) }}
+          />
+        )}
     </View>
   );
 };
@@ -19,8 +44,6 @@ const CapturePreviewScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: Theme.colors.bg
   },
   content: {

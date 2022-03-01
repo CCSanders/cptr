@@ -57,7 +57,7 @@ const CaptureButton: React.FC<Props> = ({
             //Todo: additional log context?
             console.log('Taking photo...');
 
-            await createAsyncDelay(100);
+            await createAsyncDelay(150);
 
             // play flash effect
 
@@ -65,7 +65,7 @@ const CaptureButton: React.FC<Props> = ({
                 qualityPrioritization: 'balanced',
             });
 
-            await createAsyncDelay(100);
+            await createAsyncDelay(150);
 
             // play flash effect
 
@@ -73,7 +73,7 @@ const CaptureButton: React.FC<Props> = ({
                 qualityPrioritization: 'balanced',
             });
 
-            await createAsyncDelay(100);
+            await createAsyncDelay(150);
 
             // play flash effect
 
@@ -81,7 +81,7 @@ const CaptureButton: React.FC<Props> = ({
                 qualityPrioritization: 'balanced',
             });
 
-            await createAsyncDelay(100);
+            await createAsyncDelay(150);
 
             // play flash effect
 
@@ -103,13 +103,7 @@ const CaptureButton: React.FC<Props> = ({
         async ({ nativeEvent: event }: TapGestureHandlerStateChangeEvent) => {
             switch (event.state) {
                 case State.BEGAN: {
-                    console.log('Capture button pressed.')
-                    setIsPressingButton(true);
-                }
-                case State.END:
-                case State.FAILED:
-                case State.CANCELLED: {
-                    console.log('Capture button released. Begin GIF capture')
+                    console.log('Capture button pressed. Begin GIF capture')
                     try {
                         await takeCPTR();
                     } finally {

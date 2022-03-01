@@ -11,7 +11,7 @@ import RNFS from 'react-native-fs';
 import Logo from '@app/assets/images/react-logo.png';
 import { Theme, MaterialColors, FontWeights, FontSizes } from '@app/theme';
 import CaptureButton from './components/CaptureButton';
-import { images_to_cptr_pipeline } from 'utils/image_processing';
+import { images_to_cptr_pipeline } from '../../utils/image_processing';
 
 const CaptureScreen = ({ navigation }) => {
 
@@ -48,22 +48,22 @@ const CaptureScreen = ({ navigation }) => {
 
     //process into gif
     //go to page that shows gif before publishing.. 
-    let cptrPath = `${RNFS.CachesDirectoryPath}/temp_cptr.gif`;
-    FFmpegKitConfig.selectDocumentForWrite()
+    let cptrPath = `${RNFS.DocumentDirectoryPath}/temp_cptr` + Date.now() + '.gif';
 
-    let image_to_cptr_command = images_to_cptr_pipeline(photo_array, cptrPath);
-    FFmpegKit.executeAsync(image_to_cptr_command, async (session) => {
+    images_to_cptr_pipeline(photo_array, cptrPath).then((command) => {
+      FFmpegKit.executeAsync(command, async (session) => {
 
-      const returnCode = await session.getReturnCode();
+        const returnCode = await session.getReturnCode();
 
-      if (ReturnCode.isSuccess(returnCode)) {
-        console.log("Successfully executed image_to_cptr pipeline!")
-      } else {
-        console.warn("Failed to execute image_to_cptr pipeline!");
-      }
+        if (ReturnCode.isSuccess(returnCode)) {
+          console.log("Successfully executed image_to_cptr pipeline!")
 
-      navigation.navigate('CapturePreviewScreen', {
-        cptrTmpUri: cptrPath
+          navigation.navigate('CapturePreviewScreen', {
+            cptrTmpUri: cptrPath
+          });
+        } else {
+          console.warn("Failed to execute image_to_cptr pipeline!");
+        }
       });
     });
 
